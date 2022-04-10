@@ -1,3 +1,0 @@
-C:/Dev/CPP/Pong/cmake-build-debug/CMakeFiles/Pong.dir
-C:/Dev/CPP/Pong/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Dev/CPP/Pong/cmake-build-debug/CMakeFiles/rebuild_cache.dir
