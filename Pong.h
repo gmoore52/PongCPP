@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include <string>
 #include <vector>
+#include <iostream>
 
 #ifndef PONG_PONG_H
 #define PONG_PONG_H
@@ -19,6 +20,7 @@ namespace Pong
             y2 = yR;};
         float x1, y1, x2, y2;
         void updateY(float move) {y1 += move; y2 += move;};
+        void updateX(float move) {x1 += move; x2 += move;};
     };
 
     class Paddle
@@ -36,6 +38,20 @@ namespace Pong
 
     };
 
+    class Ball
+    {
+    private:
+        float velocityX, velocityY, xPos, yPos;
+        float radius = 10.0f;
+    public:
+        Ball(float, float);
+        ~Ball();
+        void updateBall(), reverseX(), reverseY();
+        Collider bound;
+        sf::CircleShape ballCircle;
+
+    };
+
 
     class Application
     {
@@ -46,9 +62,10 @@ namespace Pong
 
     private:
         Paddle rightPaddle, leftPaddle;
+        Ball ball;
         int WIDTH, HEIGHT;
         sf::RenderWindow window;
-        void eventHandler(), drawHandler();
+        void eventHandler(), drawHandler(), pollCollisions();
 
     };
 };
