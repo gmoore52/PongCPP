@@ -5,10 +5,12 @@
 
 namespace Pong
 {
-    Paddle::Paddle(float initX, float initY) : bound(initX, initY, initX+Paddle::width, initY+Paddle::height)
+    Paddle::Paddle(float initX, float initY, sf::Color color) : bound(initX, initY, initX+Paddle::width, initY+Paddle::height)
     {
 //        Paddle::width = 100.0f; Paddle::height = 200.0f;
+        fillColor = color;
         paddleBox.setSize(sf::Vector2f(Paddle::width, Paddle::height));
+        paddleBox.setFillColor(fillColor);
         paddleBox.setPosition(initX, initY);
         xPos = initX; yPos = initY;
     }
@@ -24,11 +26,13 @@ namespace Pong
         paddleBox.move(0.0f, deltaY);
     }
 
-    Ball::Ball(float initX, float initY) : bound(initX, initY, initX + (radius * 2), initY + (radius * 2))
+    Ball::Ball(float initX, float initY, sf::Color color) : bound(initX, initY, initX + (radius * 2), initY + (radius * 2))
     {
         xPos = initX; yPos = initY;
+        fillColor = color;
         velocityX = 0.1f; velocityY = 0.1f;
         ballCircle.setRadius(radius);
+        ballCircle.setFillColor(fillColor);
         ballCircle.setPosition(xPos, yPos);
     }
 
@@ -56,8 +60,8 @@ namespace Pong
     }
 
     Application::Application(int width, int height, std::string title) : window(sf::VideoMode(width, height), title),
-                                                                         rightPaddle(width-20.0f, 20.0f), leftPaddle(0.0f, 30.0f),
-                                                                         ball(20.0f, 20.0f)
+                                                                         leftPaddle(0.0f, height/2, sf::Color::Blue), rightPaddle(width-20.0f, height/2, sf::Color::Red),
+                                                                         ball(20.0f, 20.0f, sf::Color::Green)
     {
         WIDTH = width; HEIGHT = height;
 

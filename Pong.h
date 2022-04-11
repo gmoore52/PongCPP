@@ -29,8 +29,9 @@ namespace Pong
         float xPos, yPos;
         float width = 20.0f;
         float height = 125.0f;
+        sf::Color fillColor;
     public:
-        Paddle(float, float);
+        Paddle(float, float, sf::Color);
         ~Paddle();
         void move(float);
         Collider bound;
@@ -43,8 +44,9 @@ namespace Pong
     private:
         float velocityX, velocityY, xPos, yPos;
         float radius = 10.0f;
+        sf::Color fillColor;
     public:
-        Ball(float, float);
+        Ball(float, float, sf::Color);
         ~Ball();
         void updateBall(), reverseX(), reverseY();
         Collider bound;
