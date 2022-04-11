@@ -2,7 +2,7 @@
 
 int main()
 {
-    Pong::Application application(640, 480, "SFML PRACTICE");
+    Pong::Application application(640, 480, "Pong 1.0");
 
     application.mainloop();
 

@@ -84,35 +84,36 @@ namespace Pong
                 case sf::Event::Closed:
                     window.close();
                     break;
-
-                case sf::Event::KeyPressed:
-                    switch (event.key.code) {
-                        case sf::Keyboard::W:
-                            if (leftPaddle.bound.y1 > 0) {
-                                leftPaddle.move(-dy);
-                            }
-                            break;
-                        case sf::Keyboard::S:
-                            if (leftPaddle.bound.y2 < HEIGHT)
-                            {
-                            leftPaddle.move(dy);
-                            }
-                            break;
-                        case sf::Keyboard::I:
-                            if (rightPaddle.bound.y1 > 0)
-                            {
-                            rightPaddle.move(-dy);
-                            }
-                            break;
-                        case sf::Keyboard::K:
-                            if (rightPaddle.bound.y2 < HEIGHT)
-                            {
-                            rightPaddle.move(dy);
-                            }
-                            break;
-                    }
-                    break;
             }
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+            {
+                if (leftPaddle.bound.y1 > 0)
+                {
+                    leftPaddle.move(-dy);
+                }
+            }
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+            {
+                if (leftPaddle.bound.y1 < HEIGHT)
+                {
+                    leftPaddle.move(dy);
+                }
+            }
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::I))
+            {
+                if (rightPaddle.bound.y1 > 0)
+                {
+                    rightPaddle.move(-dy);
+                }
+            }
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::K))
+            {
+                if (rightPaddle.bound.y1 < HEIGHT)
+                {
+                    rightPaddle.move(dy);
+                }
+            }
+
         }
     }
 
@@ -127,7 +128,14 @@ namespace Pong
         if(ball.bound.x2 > rightPaddle.bound.x1 && (ball.bound.y1 < rightPaddle.bound.y2 && ball.bound.y2 > rightPaddle.bound.y1))
         {
             ball.reverseX();
+            std::cout << "Right paddle" << std::endl;
         }
+//        if(rightPaddle.bound.x1 < ball.bound.x2 && ball.bound.x2 < rightPaddle.bound.x2 && ((ball.bound.y2 < rightPaddle.bound.y1) || ball.bound.y1 > rightPaddle.bound.y2))
+//        {
+//            ball.reverseX();
+//            std::cout << ball.bound.y2 << " " << rightPaddle.bound.y1 << " " << rightPaddle.bound.y2 << std::endl;
+//            ball.reverseY();
+//        }
         // Check collisions with left paddle
         if(ball.bound.x1 < leftPaddle.bound.x2 && (ball.bound.y1 < leftPaddle.bound.y2 && ball.bound.y2 > leftPaddle.bound.y1))
         {
