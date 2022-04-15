@@ -3,6 +3,7 @@
 //
 #include <SFML/Graphics.hpp>
 #include <string>
+#include <cmath>
 #include <vector>
 #include <iostream>
 
@@ -21,19 +22,20 @@ namespace Pong
         float x1, y1, x2, y2;
         void updateY(float move) {y1 += move; y2 += move;};
         void updateX(float move) {x1 += move; x2 += move;};
+        void setPosition(float x, float y){float diffX = x2-x1, diffY = y2-y1;
+                                            x1 = x; x2 = x+diffX; y1 = y; y2 = y+diffY;};
     };
 
     class Paddle
     {
     private:
-        float xPos, yPos;
         float width = 20.0f;
         float height = 125.0f;
         sf::Color fillColor;
     public:
         Paddle(float, float, sf::Color);
         ~Paddle();
-        void move(float);
+        void move(float), setPos(float, float);
         Collider bound;
         sf::RectangleShape paddleBox;
 
@@ -42,16 +44,59 @@ namespace Pong
     class Ball
     {
     private:
-        float velocityX, velocityY, xPos, yPos;
+        float velocityX, velocityY;
         float radius = 10.0f;
         sf::Color fillColor;
     public:
         Ball(float, float, sf::Color);
         ~Ball();
-        void updateBall(), reverseX(), reverseY();
+        void updateBall(), reverseX(), reverseY(), setPos(float, float);
         Collider bound;
         sf::CircleShape ballCircle;
 
+    };
+
+    class Game
+    {
+    public:
+        Game(int, int);
+        ~Game();
+        void pollEvents(sf::RenderWindow&, std::string&), pollCollisions(), drawGame(sf::RenderWindow&);
+
+    private:
+        Paddle rightPaddle, leftPaddle;
+        Ball ball;
+        int WIDTH, HEIGHT, scoreRight, scoreLeft;
+        sf::Font font;
+        sf::Text labelLeft, labelRight;
+        std::string textLeft, textRight;
+        void updateLabels(), resetGame();
+
+    };
+
+    struct Button
+    {
+    Button(float, float, float, float, std::string);
+    sf::RectangleShape buttonFace;
+    sf::Text displayLabel;
+    sf::Font fontType;
+    sf::Vector2f buttonPos;
+    Collider bound;
+    std::string label;
+    bool isClicked(sf::Event&);
+    };
+
+    class MainMenu
+    {
+    private:
+        Button button1, button2;
+        sf::Text mainLabel;
+        sf::Font fontType;
+        float buttonWidth = 200.0f, buttonHeight = 50.0f;
+    public:
+        MainMenu(int, int, float, float);
+        ~MainMenu();
+        void pollEvents(sf::RenderWindow&, std::string&), drawMenu(sf::RenderWindow&);
     };
 
 
@@ -61,14 +106,12 @@ namespace Pong
         Application(int width, int height, std::string title);
         ~Application();
         void mainloop();
-
     private:
-        Paddle rightPaddle, leftPaddle;
-        Ball ball;
-        int WIDTH, HEIGHT;
+        Game pongGame;
+        MainMenu mainMenu;
         sf::RenderWindow window;
-        void eventHandler(), drawHandler(), pollCollisions();
-
+        std::string appState;
+        void drawWindow();
     };
 };
 #endif //PONG_PONG_H
